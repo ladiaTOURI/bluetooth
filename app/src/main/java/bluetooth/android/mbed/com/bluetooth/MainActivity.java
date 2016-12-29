@@ -20,6 +20,7 @@ public class MainActivity extends Activity  {
     private Set<BluetoothDevice>pairedDevices;
     ListView lv;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +42,33 @@ public class MainActivity extends Activity  {
         if (!BA.isEnabled()) {
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOn, 0);
-            Toast.makeText(getApplicationContext(), "Turned on",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Allumé",Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_LONG).show();
         }
     }
+    //activer le  bluetooth directement
+    /*if (!BA.isEnabled()) {
+        BA.enable();
+    }*/
+//  savoir si l'utilisateur  a  activer le  bluetooth
+   //@Override
+  /*  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQUEST_CODE_ENABLE_BLUETOOTH)
+            return;
+        if (resultCode == RESULT_OK) {
+            // L'utilisation a activé le bluetooth
+        } else {
+            // L'utilisation n'a pas activé le bluetooth
+        }
+    }*/
 // methode pour désactiver le  bluettooth avec disable
     public void off(View v){
         BA.disable();
-        Toast.makeText(getApplicationContext(), "Turned off" ,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Éteindre" ,Toast.LENGTH_LONG).show();
     }
-    // permettre a  d'autres appareil de  se  connecter avec la méthode   startActivityForResult
+    // permettre aux   d'autres appareil de  se  connecter avec la méthode   startActivityForResult
     //  startActivityForResult  possede comme valeur ACTION_REQUEST_DISCOVERABLE
     public  void visible(View v){
         Intent getVisible = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
@@ -66,7 +83,7 @@ public class MainActivity extends Activity  {
         //dans ce cas on veux  parcourir la list la  list des appareils trouvés
 
         for(BluetoothDevice bt : pairedDevices) list.add(bt.getName());
-        Toast.makeText(getApplicationContext(), "Showing Paired Devices",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Affichage des périphériques couplés",Toast.LENGTH_SHORT).show();
 
         final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 

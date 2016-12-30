@@ -34,8 +34,7 @@ public class MainActivity extends Activity {
     private Set<BluetoothDevice> pairedDevices;
     ListView lv;
     /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     *  This was auto-generated to implement the App Indexing API.
      */
     private GoogleApiClient client;
 
@@ -53,21 +52,21 @@ public class MainActivity extends Activity {
         //grace  a la methode getDefaultAdapter
         BA = BluetoothAdapter.getDefaultAdapter();
         lv = (ListView) findViewById(R.id.listView);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        //  This was auto-generated to implement the App Indexing API.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     //activer bluetooth avec la methode startActivityForResult avec l'intent l'ACTION_REQUEST_ENABLE
-    //  dans  ce  cas on demande à l'utilisateur  de l'activer, on l'active pas directement
+    //  dans  ce  cas on demande à l'utilisateur  de l'activer,
     //on peut verifier s'il est  activer avec la methode isEnabled
+    // s'il n'est pas  activé,  on l'active
     public void on(View v) {
         if (!BA.isEnabled()) {
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOn, 0);
             Toast.makeText(getApplicationContext(), "Allumez", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Blutooth est allumé", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -100,7 +99,7 @@ public class MainActivity extends Activity {
         startActivityForResult(getVisible, 0);
     }
 
-    //  découvrir les différents  appreils  connecter  a  note  apppareil  cible  avec la methode getBondedDevices
+    //  découvrir les différents  appreils  connectés  a  note  apppareil  cible  avec la methode getBondedDevices
     public void list(View v) {
         pairedDevices = BA.getBondedDevices();
 
@@ -115,10 +114,6 @@ public class MainActivity extends Activity {
         lv.setAdapter(adapter);
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("Main Page") // TODO: Define a title for the content shown.
@@ -135,8 +130,7 @@ public class MainActivity extends Activity {
     public void onStart() {
         super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        //  This was auto-generated to implement the App Indexing API.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
@@ -145,56 +139,16 @@ public class MainActivity extends Activity {
     public void onStop() {
         super.onStop();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        //  This was auto-generated to implement the App Indexing API.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
 
-  /*  private class AcceptThread extends Thread {
-        private final BluetoothServerSocket mmServerSocket;
 
-        public AcceptThread() {
-            BluetoothServerSocket tmp = null;
-            try {
-                tmp = BA.listenUsingRfcommWithServiceRecord(NAME, MY_UUID);
-            } catch (IOException e) {
-            }
-            mmServerSocket = tmp;
-        }
-
-        public void run() {
-            BluetoothSocket socket = null;
-            while (true) {
-                try {
-                    socket = mmServerSocket.accept();
-                } catch (IOException e) {
-                    break;
-                }
-
-                if (socket != null) {
-                    manageConnectedSocket(socket);
-                    mmServerSocket.close();
-                    break;
-                }
-            }
-        }
-
-        private void manageConnectedSocket(BluetoothSocket socket) {
-        }
-
-        public void cancel() {
-            try {
-                mmServerSocket.close();
-            } catch (IOException e) {
-            }
-        }
-    }*/
-//
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
-// configurer la connexion Bluetooth côté client :
+// configurer la connexion Bluetooth côté client//  coté  serveur est géré  par la rasbery PI
         public ConnectThread(BluetoothDevice device) {
             BluetoothSocket tmp = null;
             mmDevice = device;
